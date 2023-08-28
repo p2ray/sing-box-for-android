@@ -1,0 +1,151 @@
+package com.github.foxray.ui.main
+
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isGone
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.distribute.Distribute
+import io.nekohasekai.libbox.Libbox
+import com.github.foxray.Application
+import com.github.foxray.R
+import com.github.foxray.constant.EnabledType
+import com.github.foxray.database.Settings
+import com.github.foxray.databinding.FragmentSettingsBinding
+import com.github.foxray.ktx.addTextChangedListener
+import com.github.foxray.ktx.launchCustomTab
+import com.github.foxray.ktx.setSimpleItems
+import com.github.foxray.ktx.text
+import com.github.foxray.ui.MainActivity
+import com.github.foxray.ui.profileoverride.ProfileOverrideActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+class SettingsFragment : Fragment() {
+
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        onCreate()
+        return binding.root
+    }
+
+    private val requestIgnoreBatteryOptimizations = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { _ ->
+        lifecycleScope.launch(Dispatchers.IO) {
+            reloadSettings()
+        }
+    }
+
+    private fun onCreate() {
+        val activity = activity as MainActivity? ?: return
+        binding.versionText.text = Libbox.version()
+        binding.clearButton.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                activity.getExternalFilesDir(null)?.deleteRecursively()
+                reloadSettings()
+            }
+        }
+        binding.appCenterEnabled.addTextChangedListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val allowed = EnabledType.valueOf(it).boolValue
+                Settings.analyticsAllowed =
+                    if (allowed) Settings.ANALYSIS_ALLOWED else Settings.ANALYSIS_DISALLOWED
+                withContext(Dispatchers.Main) {
+                    binding.checkUpdateEnabled.isEnabled = allowed
+                }
+                if (!allowed) {
+                    AppCenter.setEnabled(false)
+                } else {
+                    if (!AppCenter.isConfigured()) {
+                        activity.startAnalysisInternal()
+                    }
+                    AppCenter.setEnabled(true)
+                }
+            }
+        }
+        binding.checkUpdateEnabled.addTextChangedListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val newValue = EnabledType.valueOf(it).boolValue
+                Settings.checkUpdateEnabled = newValue
+                if (!newValue) {
+                    Distribute.disableAutomaticCheckForUpdate()
+                }
+            }
+        }
+        binding.disableMemoryLimit.addTextChangedListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                val newValue = EnabledType.valueOf(it).boolValue
+                Settings.disableMemoryLimit = !newValue
+            }
+        }
+        binding.dontKillMyAppButton.setOnClickListener {
+            it.context.launchCustomTab("https://dontkillmyapp.com/")
+        }
+        binding.requestIgnoreBatteryOptimizationsButton.setOnClickListener {
+            requestIgnoreBatteryOptimizations.launch(
+                Intent(
+                    android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS,
+                    Uri.parse("package:${Application.application.packageName}")
+                )
+            )
+        }
+        binding.configureOverridesButton.setOnClickListener {
+            startActivity(Intent(requireContext(), ProfileOverrideActivity::class.java))
+        }
+        binding.communityButton.setOnClickListener {
+            it.context.launchCustomTab("https://community.sagernet.org/")
+        }
+        binding.documentationButton.setOnClickListener {
+            it.context.launchCustomTab("http://sing-box.sagernet.org/installation/clients/sfa/")
+        }
+        lifecycleScope.launch(Dispatchers.IO) {
+            reloadSettings()
+        }
+    }
+
+    private suspend fun reloadSettings() {
+        val activity = activity ?: return
+        val dataSize = Libbox.formatBytes(
+            (activity.getExternalFilesDir(null) ?: activity.filesDir)
+                .walkTopDown().filter { it.isFile }.map { it.length() }.sum()
+        )
+        val appCenterEnabled = Settings.analyticsAllowed == Settings.ANALYSIS_ALLOWED
+        val checkUpdateEnabled = Settings.checkUpdateEnabled
+        val removeBackgroudPermissionPage = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Application.powerManager.isIgnoringBatteryOptimizations(Application.application.packageName)
+        } else {
+            true
+        }
+        withContext(Dispatchers.Main) {
+            binding.dataSizeText.text = dataSize
+            binding.appCenterEnabled.text = EnabledType.from(appCenterEnabled).name
+            binding.appCenterEnabled.setSimpleItems(R.array.enabled)
+            binding.checkUpdateEnabled.isEnabled = appCenterEnabled
+            binding.checkUpdateEnabled.text = EnabledType.from(checkUpdateEnabled).name
+            binding.checkUpdateEnabled.setSimpleItems(R.array.enabled)
+            binding.disableMemoryLimit.text = EnabledType.from(!Settings.disableMemoryLimit).name
+            binding.disableMemoryLimit.setSimpleItems(R.array.enabled)
+            binding.backgroundPermissionCard.isGone = removeBackgroudPermissionPage
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+}
