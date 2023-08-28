@@ -94,19 +94,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="io.nekohasekai.sfa.ui.profile.NewProfileActivity"
+            android:name="com.github.foxray.ui.profile.NewProfileActivity"
             android:exported="false" />
         <activity
-            android:name="io.nekohasekai.sfa.ui.profile.EditProfileActivity"
+            android:name="com.github.foxray.ui.profile.EditProfileActivity"
             android:exported="false" />
         <activity
-            android:name="io.nekohasekai.sfa.ui.profile.EditProfileContentActivity"
+            android:name="com.github.foxray.ui.profile.EditProfileContentActivity"
             android:exported="false" />
         <activity
-            android:name="io.nekohasekai.sfa.ui.profileoverride.ProfileOverrideActivity"
+            android:name="com.github.foxray.ui.profileoverride.ProfileOverrideActivity"
             android:exported="false" />
         <activity
-            android:name="io.nekohasekai.sfa.ui.profileoverride.PerAppProxyActivity"
+            android:name="com.github.foxray.ui.profileoverride.PerAppProxyActivity"
             android:exported="false" />
 
         <service

@@ -416,7 +416,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -428,7 +428,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/profile"
-                        android:textAppearance="?attr/textAppearanceTitleLarge">
+                        android:textAppearance="?attr/textAppearanceTitleLarge"
+                        >
 
                     </TextView>
 

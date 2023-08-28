@@ -7,7 +7,7 @@
         android:shortcutShortLabel="@string/quick_toggle">
         <intent
             android:action="android.intent.action.MAIN"
-            android:targetClass="io.nekohasekai.sfa.ui.ShortcutActivity"
-            android:targetPackage="io.nekohasekai.sfa" />
+            android:targetClass="com.github.foxray.ui.ShortcutActivity"
+            android:targetPackage="com.github.foxray" />
     </shortcut>
 </shortcuts>
