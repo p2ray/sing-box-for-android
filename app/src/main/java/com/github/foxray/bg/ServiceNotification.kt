@@ -31,7 +31,7 @@ class ServiceNotification(private val service: Service) {
 
     private val notification by lazy {
         NotificationCompat.Builder(service, notificationChannel).setWhen(0)
-            .setContentTitle("sing-box")
+            .setContentTitle("FoXray")
             .setContentText("service started").setOnlyAlertOnce(true)
             .setSmallIcon(R.drawable.ic_menu)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
@@ -64,7 +64,7 @@ class ServiceNotification(private val service: Service) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Application.notification.createNotificationChannel(
                 NotificationChannel(
-                    notificationChannel, "sing-box service", NotificationManager.IMPORTANCE_LOW
+                    notificationChannel, "FoXray service", NotificationManager.IMPORTANCE_LOW
                 )
             )
         }

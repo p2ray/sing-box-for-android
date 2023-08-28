@@ -1,7 +1,7 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <color name="seed">#d81b60</color>
 
-    <color name="blue_grey_600">#3498db</color>
+    <color name="blue_grey_600">#007AFE</color>
 
     <color name="log_red">#ff2158</color>
     <color name="log_green">#2ecc71</color>
@@ -11,6 +11,5 @@
     <color name="log_red_light">#e91e63</color>
     <color name="log_blue_light">#00a6b2</color>
     <color name="log_white">#ececec</color>
-
     <color name="divider">#cfcfcf</color>
 </resources>

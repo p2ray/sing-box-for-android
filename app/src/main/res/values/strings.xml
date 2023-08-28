@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">sing-box</string>
+    <string name="app_name">FoXray</string>
 
     <string name="stop">Stop</string>
 
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">FoXray</string>
     <string name="title_configuration">Profiles</string>
     <string name="title_log">Logs</string>
     <string name="title_settings">Settings</string>
@@ -11,7 +11,7 @@
     <string name="title_edit_profile">Edit Profile</string>
     <string name="title_edit_configuration">Edit Configuration</string>
     <string name="title_overview">Overview</string>
-    <string name="title_groups">Groups</string>
+    <string name="title_groups">Locations 🌍</string>
 
     <string name="quick_toggle">Toggle</string>
     <string name="profile_name">Name</string>
@@ -88,7 +88,7 @@
     <string name="send">Send</string>
     <string name="send_feedback">Send Feedback</string>
     <string name="about_title">About</string>
-    <string name="app_description">Android client for sing-box, the universal proxy platform.</string>
+    <string name="app_description">Forever n ever P❤️</string>
     <string name="documentation_button">Documentation</string>
     <string name="community_button">Community</string>
     <string name="memory_limit">Memory Limit</string>

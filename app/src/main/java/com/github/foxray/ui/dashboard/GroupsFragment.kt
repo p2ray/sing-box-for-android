@@ -65,6 +65,7 @@ class GroupsFragment : Fragment(), CommandClient.Handler {
                 commandClient.connect()
             }
         }
+
     }
 
     private var displayed = false
@@ -130,6 +131,7 @@ class GroupsFragment : Fragment(), CommandClient.Handler {
         lateinit var adapter: ItemAdapter
         fun bind(group: OutboundGroup) {
             this.group = group
+            group.isExpand = true
             binding.groupName.text = group.tag
             binding.groupType.text = Libbox.proxyDisplayType(group.type)
             binding.urlTestButton.setOnClickListener {

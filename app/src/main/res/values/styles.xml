@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="vpntree">
+        <item name="android:textSize">28sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="status">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="not_connect">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:shadowColor">#051C1C1E</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">2.77</item>
+        <item name="android:shadowRadius">2.21</item>
+    </style>
+</resources>

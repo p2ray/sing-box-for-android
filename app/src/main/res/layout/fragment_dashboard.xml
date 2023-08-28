@@ -4,13 +4,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.DashboardFragment">
+    tools:context=".ui.main.DashboardFragment"
+    >
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/background_"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:clipToOutline="true"
+        android:alpha="1"
+        android:background="@xml/gradient_bg"
+        />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center|top"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/bg">
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/top_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            >
+            <ImageButton
+                android:id="@+id/navv"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_foxray"
+                android:layout_gravity="right|center_vertical"
+                android:backgroundTintMode="multiply"
+                android:background="#00FFFFFF"
+                android:backgroundTint="@color/log_white"/>
+            <TextView
+                android:id="@+id/vpntree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textAppearance="@style/vpntree"
+                android:layout_gravity="center_horizontal"
+                />
+            <ImageButton
+                android:id="@+id/settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_settings_24"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginLeft="150dp"
+                android:backgroundTintMode="multiply"
+                android:background="#00FFFFFF"
+                android:backgroundTint="@color/log_white"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="left"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:textAppearance="@style/status"
+                android:lineSpacingExtra="2sp"
+                android:translationY="-0.95sp"
+                android:gravity="top"
+                />
+            <TextView
+                android:id="@+id/not_connect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Not connected"
+                android:textAppearance="@style/not_connect"
+                android:lineSpacingExtra="1sp"
+                android:translationY="-0.57sp"
+                android:gravity="top"
+                />
+        </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/dashboardTabLayout"
@@ -18,7 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            app:tabIndicatorFullWidth="true">
+            app:tabIndicatorFullWidth="true"
+            >
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
@@ -36,20 +119,64 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/dashboardPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="270dp" />
 
     </LinearLayout>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="center_horizontal|center"
         android:layout_margin="16dp"
         android:backgroundTint="@color/blue_grey_600"
         app:srcCompat="@drawable/ic_play_arrow_24"
-        app:tint="@android:color/white" />
+        app:tint="@android:color/white"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/buttonName"
+        android:translationY="150dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        app:buttonName=" "
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_margin="16dp"
+        app:buttonColor="#5D7EFC"
+        app:allCaps="true"
+        app:border_thickness="2dp"
+        app:autoResetButtonAfterResult="false"
+        android:text="CONNECT"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textAppearance="@style/vpntree"
+        android:textColor="@color/blue_grey_600"/>
+    <de.timonknispel.ktloadingbutton.KTLoadingButton
+        android:id="@+id/fab"
+        android:translationY="150dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        app:buttonName=" "
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_margin="16dp"
+        app:buttonColor="#5D7EFC"
+        app:allCaps="true"
+        app:border_thickness="2dp"
+        app:succeedColor="#9F4BFB"
+        />
+
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ad_block"
+        android:layout_width="327dp"
+        android:layout_height="131dp"
+        android:clipToOutline="true"
+        android:background="@drawable/ad"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="16dp"
+        />
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

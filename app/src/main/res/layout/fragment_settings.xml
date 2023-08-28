@@ -324,14 +324,14 @@
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/documentation_button" />
+                        android:text="Buy Configs" />
 
                     <Button
                         android:id="@+id/communityButton"
                         style="@style/Widget.Material3.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/community_button" />
+                        android:text="Telegram Channel" />
                 </LinearLayout>
 
 

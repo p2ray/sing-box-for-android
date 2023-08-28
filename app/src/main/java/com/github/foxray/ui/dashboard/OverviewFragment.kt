@@ -140,9 +140,10 @@ class OverviewFragment : Fragment(), CommandClient.Handler {
                     }
                 }
                 withContext(Dispatchers.Main) {
-                    parent.statusText.isVisible = items.isEmpty()
-                    //parent.container.isVisible = items.isNotEmpty()
-                    parent.container.isVisible = false
+
+                    parent.container.isVisible = items.isNotEmpty()
+                    parent.profileCard.isVisible = false
+
                     notifyDataSetChanged()
                 }
             }

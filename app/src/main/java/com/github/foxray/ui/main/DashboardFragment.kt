@@ -41,23 +41,36 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         activity.serviceStatus.observe(viewLifecycleOwner) {
             when (it) {
                 Status.Stopped -> {
-                    binding.fab.setImageResource(R.drawable.ic_play_arrow_24)
-                    binding.fab.show()
+                    //binding.fab.setImageResource(R.drawable.ic_play_arrow_24)
+                    //binding.fab.show()
+                    binding.fab.reset()
+                    binding.notConnect.text = "Not Connected"
+                    binding.buttonName.text = "CONNECT"
+                    binding.buttonName.isVisible =true
                     disablePager()
                 }
 
                 Status.Starting -> {
-                    binding.fab.hide()
+                    //binding.fab.hide()
+                    binding.notConnect.text = "Connecting..."
+                    binding.buttonName.isVisible = false
                 }
 
                 Status.Started -> {
-                    binding.fab.setImageResource(R.drawable.ic_stop_24)
-                    binding.fab.show()
+                    //binding.fab.setImageResource(R.drawable.ic_stop_24)
+                    //binding.fab.show()
+                    binding.fab.doResult(true)
+                    binding.notConnect.text = "Connected"
+                    binding.buttonName.text = "DISCONNECT"
+                    binding.buttonName.isVisible = true
                     enablePager()
                 }
 
                 Status.Stopping -> {
-                    binding.fab.hide()
+                    //binding.fab.hide()
+                    binding.fab.startLoading()
+                    binding.notConnect.text = "Disconnecting..."
+                    binding.buttonName.isVisible = false
                     disablePager()
                 }
 
@@ -76,6 +89,9 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
                 else -> {}
             }
+        }
+        binding.settings.setOnClickListener {
+
         }
     }
 

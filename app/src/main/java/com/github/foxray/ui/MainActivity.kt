@@ -11,6 +11,7 @@ import android.text.TextUtils
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -46,6 +47,7 @@ import com.github.foxray.ktx.text
 import com.github.foxray.ui.profile.NewProfileActivity
 import com.github.foxray.ui.shared.AbstractActivity
 import com.github.foxray.utils.HTTPClient
+import ir.heydarii.androidloadingfragment.LoadingFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -70,6 +72,8 @@ class MainActivity : AbstractActivity(), ServiceConnection.Callback, DistributeL
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        supportActionBar!!.hide()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -85,6 +89,7 @@ class MainActivity : AbstractActivity(), ServiceConnection.Callback, DistributeL
                 )
             )
         setupActionBarWithNavController(navController, appBarConfiguration)
+
         binding.navView.setupWithNavController(navController)
 
         reconnect()
@@ -165,6 +170,7 @@ class MainActivity : AbstractActivity(), ServiceConnection.Callback, DistributeL
     }
 
     private suspend fun addConfig(){
+        showLoading()
         ProfileManager.delete(ProfileManager.list())
         val typedProfile = TypedProfile()
         val profile = Profile(name = "test", typed = typedProfile)
@@ -182,8 +188,15 @@ class MainActivity : AbstractActivity(), ServiceConnection.Callback, DistributeL
         typedProfile.autoUpdate = true
         typedProfile.autoUpdateInterval = 1
         ProfileManager.create(profile)
+        Thread.sleep(4_000)
+        hideLoading()
     }
-
+    private fun showLoading() {
+        LoadingFragment.getInstance().show(supportFragmentManager, "TAG")
+    }
+    private fun hideLoading() {
+        LoadingFragment.getInstance().dismissDialog()
+    }
     private suspend fun importProfile(content: ProfileContent) {
         val typedProfile = TypedProfile()
         val profile = Profile(name = content.name, typed = typedProfile)

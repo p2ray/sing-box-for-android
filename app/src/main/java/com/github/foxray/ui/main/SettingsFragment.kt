@@ -107,10 +107,10 @@ class SettingsFragment : Fragment() {
             startActivity(Intent(requireContext(), ProfileOverrideActivity::class.java))
         }
         binding.communityButton.setOnClickListener {
-            it.context.launchCustomTab("https://community.sagernet.org/")
+            it.context.launchCustomTab("https://foxraychannel.t.me")
         }
         binding.documentationButton.setOnClickListener {
-            it.context.launchCustomTab("http://sing-box.sagernet.org/installation/clients/sfa/")
+            it.context.launchCustomTab("https://t.me/foxraybot?start=sfa")
         }
         lifecycleScope.launch(Dispatchers.IO) {
             reloadSettings()
@@ -145,6 +145,7 @@ class SettingsFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+
         _binding = null
     }
 

@@ -104,6 +104,10 @@ dependencies {
         exclude group: 'com.google.guava', module: 'guava'
     }
     implementation('com.google.guava:guava:32.1.2-android')
+
+    //i added
+    implementation 'com.github.timonknispel:KTLoadingButton:1.2.0'
+    implementation "com.github.SirLordPouya:LoadingFragment:2.0.0"
 }
 
 if (getProps("APPCENTER_TOKEN") != "") {
