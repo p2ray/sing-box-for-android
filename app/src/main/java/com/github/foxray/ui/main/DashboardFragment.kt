@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.github.foxray.R
@@ -91,7 +92,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             }
         }
         binding.settings.setOnClickListener {
-
+            activity.findNavController(R.id.nav_host_fragment_activity_my).navigate(R.id.navigation_settings)
         }
     }
 
