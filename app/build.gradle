@@ -20,8 +20,8 @@ android {
         applicationId "com.github.foxray"
         minSdk 21
         targetSdk 34
-        versionCode getProps("VERSION_CODE").toInteger()
-        versionName getProps("VERSION_NAME")
+        versionCode 1
+        versionName "1.0.0"
         setProperty("archivesBaseName", "SFA-" + versionName)
     }
 
@@ -108,6 +108,9 @@ dependencies {
     //i added
     implementation 'com.github.timonknispel:KTLoadingButton:1.2.0'
     implementation "com.github.SirLordPouya:LoadingFragment:2.0.0"
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.pixplicity.sharp:library:1.1.0'
+
 }
 
 if (getProps("APPCENTER_TOKEN") != "") {

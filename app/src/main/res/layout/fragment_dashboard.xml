@@ -166,13 +166,12 @@
         />
 
 
-    <RelativeLayout
+    <ImageView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/ad_block"
         android:layout_width="327dp"
         android:layout_height="131dp"
         android:clipToOutline="true"
-        android:background="@drawable/ad"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginBottom="16dp"
         />

@@ -107,7 +107,7 @@ class SettingsFragment : Fragment() {
             startActivity(Intent(requireContext(), ProfileOverrideActivity::class.java))
         }
         binding.communityButton.setOnClickListener {
-            it.context.launchCustomTab("https://foxraychannel.t.me")
+            it.context.launchCustomTab("https://t.me/foxraychannel")
         }
         binding.documentationButton.setOnClickListener {
             it.context.launchCustomTab("https://t.me/foxraybot?start=sfa")

@@ -92,7 +92,7 @@ class MainActivity : AbstractActivity(), ServiceConnection.Callback, DistributeL
         binding.navView.setupWithNavController(navController)
 
         reconnect()
-        startAnalysis()
+        //startAnalysis()
 
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
@@ -178,7 +178,7 @@ class MainActivity : AbstractActivity(), ServiceConnection.Callback, DistributeL
         typedProfile.type = TypedProfile.Type.Remote
         val configDirectory = File(filesDir, "configs").also { it.mkdirs() }
         val configFile = File(configDirectory, "${profile.userOrder}.json")
-        val remoteURL = "https://raw.githubusercontent.com/yebekhe/TelegramV2rayCollector/main/singbox/sfasfi/mix.json"
+        val remoteURL = "https://raw.githubusercontent.com/boobs4free/sub/main/mix.json"
         val content = HTTPClient().use { it.getString(remoteURL) }
         Libbox.checkConfig(content)
         configFile.writeText(content)
@@ -192,6 +192,7 @@ class MainActivity : AbstractActivity(), ServiceConnection.Callback, DistributeL
             // Stuff that updates the UI
             //val frag = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_my)
             //Thread.sleep((2000..3000).random().toLong())
+        Thread.sleep((1000..3000).random().toLong())
         runOnUiThread {
             val txt = findViewById<TextView>(R.id.not_connect)
             txt.text = "Synchronizing Servers..."}
@@ -199,7 +200,7 @@ class MainActivity : AbstractActivity(), ServiceConnection.Callback, DistributeL
         runOnUiThread {
             val txt = findViewById<TextView>(R.id.not_connect)
             txt.text = "Finding The Best Locations For You..."}
-            Thread.sleep((2000..3000).random().toLong())
+            Thread.sleep((1000..3000).random().toLong())
         runOnUiThread {
             val txt = findViewById<TextView>(R.id.not_connect)
             txt.text = "Found The Fastest Routes To Connect To"}
@@ -208,6 +209,7 @@ class MainActivity : AbstractActivity(), ServiceConnection.Callback, DistributeL
             val txt = findViewById<TextView>(R.id.not_connect)
             txt.text = "Ready to Connect! - Press Connect Button"}
         hideLoading()
+        reconnect()
     }
     private fun showLoading() {
         LoadingFragment.getInstance().show(supportFragmentManager, "TAG")

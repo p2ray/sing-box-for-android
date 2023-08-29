@@ -14,16 +14,19 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.github.foxray.R
 import com.github.foxray.bg.BoxService
+import com.github.foxray.bg.ServiceNotification
 import com.github.foxray.constant.Status
 import com.github.foxray.database.Profile
 import com.github.foxray.database.ProfileManager
 import com.github.foxray.database.TypedProfile
 import com.github.foxray.databinding.FragmentDashboardBinding
 import com.github.foxray.ktx.errorDialogBuilder
+import com.github.foxray.ktx.launchCustomTab
 import com.github.foxray.ui.MainActivity
 import com.github.foxray.ui.dashboard.GroupsFragment
 import com.github.foxray.ui.dashboard.OverviewFragment
 import com.github.foxray.utils.HTTPClient
+import com.github.foxray.utils.SvgLoader
 import io.nekohasekai.libbox.Libbox
 import ir.heydarii.androidloadingfragment.LoadingFragment
 import kotlinx.coroutines.Dispatchers
@@ -69,6 +72,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 Status.Starting -> {
                     //binding.fab.hide()
                     binding.notConnect.text = "Connecting..."
+                    binding.fab.startLoading()
                     binding.buttonName.isVisible = false
                 }
 
@@ -96,9 +100,9 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         binding.fab.setOnClickListener {
             when (activity.serviceStatus.value) {
                 Status.Stopped -> {
+                    //println("fuck")
                     activity.startService()
                 }
-
                 Status.Started -> {
                     BoxService.stop()
                 }
@@ -108,6 +112,10 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         }
         binding.settings.setOnClickListener {
             activity.findNavController(R.id.nav_host_fragment_activity_my).navigate(R.id.navigation_settings)
+        }
+        SvgLoader().fetchSVG(this.requireContext(), "https://raw.githubusercontent.com/boobs4free/sub/main/ad.svg",binding.adBlock)
+        binding.adBlock.setOnClickListener {
+            it.context.launchCustomTab("https://t.me/foXrayBot?start=sfa")
         }
     }
 
