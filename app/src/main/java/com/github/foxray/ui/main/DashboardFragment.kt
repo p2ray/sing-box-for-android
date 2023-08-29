@@ -4,19 +4,33 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.github.foxray.R
 import com.github.foxray.bg.BoxService
 import com.github.foxray.constant.Status
+import com.github.foxray.database.Profile
+import com.github.foxray.database.ProfileManager
+import com.github.foxray.database.TypedProfile
 import com.github.foxray.databinding.FragmentDashboardBinding
+import com.github.foxray.ktx.errorDialogBuilder
 import com.github.foxray.ui.MainActivity
 import com.github.foxray.ui.dashboard.GroupsFragment
 import com.github.foxray.ui.dashboard.OverviewFragment
+import com.github.foxray.utils.HTTPClient
+import io.nekohasekai.libbox.Libbox
+import ir.heydarii.androidloadingfragment.LoadingFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.util.Date
 
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
@@ -29,6 +43,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     ): View {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         onCreate()
+
         return binding.root
     }
 
@@ -122,4 +137,40 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         }
     }
 
+    private suspend fun addConfig(){
+        showLoading()
+        ProfileManager.delete(ProfileManager.list())
+        val typedProfile = TypedProfile()
+        val profile = Profile(name = "test", typed = typedProfile)
+        profile.userOrder = 0L
+        typedProfile.type = TypedProfile.Type.Remote
+        val configDirectory = File(requireActivity().filesDir, "configs").also { it.mkdirs() }
+        val configFile = File(configDirectory, "${profile.userOrder}.json")
+        val remoteURL = "https://raw.githubusercontent.com/yebekhe/TelegramV2rayCollector/main/singbox/sfasfi/mix.json"
+        val content = HTTPClient().use { it.getString(remoteURL) }
+        Libbox.checkConfig(content)
+        configFile.writeText(content)
+        typedProfile.path = configFile.path
+        typedProfile.remoteURL = remoteURL
+        typedProfile.lastUpdated = Date()
+        typedProfile.autoUpdate = true
+        typedProfile.autoUpdateInterval = 1
+        ProfileManager.create(profile)
+        val txt = binding.notConnect
+        Thread.sleep(1_000)
+        txt.text = "Synchronizing Servers..."
+        Thread.sleep(1_000)
+        txt.text = "Finding The Best Locations For You..."
+        Thread.sleep(1_000)
+        txt.text = "Found The Fastest Routes To Connect To"
+        Thread.sleep(1_000)
+        txt.text = "Not Connected - Press Connect Button"
+        hideLoading()
+    }
+    private fun showLoading() {
+        LoadingFragment.getInstance().show(requireActivity().supportFragmentManager, "TAG")
+    }
+    private fun hideLoading() {
+        LoadingFragment.getInstance().dismissDialog()
+    }
 }

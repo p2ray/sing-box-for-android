@@ -8,27 +8,16 @@ import android.content.Intent
 import android.net.VpnService
 import android.os.Bundle
 import android.text.TextUtils
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.microsoft.appcenter.AppCenter
-import com.microsoft.appcenter.analytics.Analytics
-import com.microsoft.appcenter.crashes.Crashes
-import com.microsoft.appcenter.distribute.Distribute
-import com.microsoft.appcenter.distribute.DistributeListener
-import com.microsoft.appcenter.distribute.ReleaseDetails
-import com.microsoft.appcenter.distribute.UpdateAction
-import com.microsoft.appcenter.utils.AppNameHelper
-import io.nekohasekai.libbox.Libbox
-import io.nekohasekai.libbox.ProfileContent
 import com.github.foxray.Application
 import com.github.foxray.BuildConfig
 import com.github.foxray.R
@@ -43,10 +32,20 @@ import com.github.foxray.database.Settings
 import com.github.foxray.database.TypedProfile
 import com.github.foxray.databinding.ActivityMainBinding
 import com.github.foxray.ktx.errorDialogBuilder
-import com.github.foxray.ktx.text
 import com.github.foxray.ui.profile.NewProfileActivity
 import com.github.foxray.ui.shared.AbstractActivity
 import com.github.foxray.utils.HTTPClient
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.microsoft.appcenter.AppCenter
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.Crashes
+import com.microsoft.appcenter.distribute.Distribute
+import com.microsoft.appcenter.distribute.DistributeListener
+import com.microsoft.appcenter.distribute.ReleaseDetails
+import com.microsoft.appcenter.distribute.UpdateAction
+import com.microsoft.appcenter.utils.AppNameHelper
+import io.nekohasekai.libbox.Libbox
+import io.nekohasekai.libbox.ProfileContent
 import ir.heydarii.androidloadingfragment.LoadingFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -94,6 +93,7 @@ class MainActivity : AbstractActivity(), ServiceConnection.Callback, DistributeL
 
         reconnect()
         startAnalysis()
+
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 runCatching {
@@ -188,7 +188,25 @@ class MainActivity : AbstractActivity(), ServiceConnection.Callback, DistributeL
         typedProfile.autoUpdate = true
         typedProfile.autoUpdateInterval = 1
         ProfileManager.create(profile)
-        Thread.sleep(4_000)
+
+            // Stuff that updates the UI
+            //val frag = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_my)
+            //Thread.sleep((2000..3000).random().toLong())
+        runOnUiThread {
+            val txt = findViewById<TextView>(R.id.not_connect)
+            txt.text = "Synchronizing Servers..."}
+            Thread.sleep((2000..3000).random().toLong())
+        runOnUiThread {
+            val txt = findViewById<TextView>(R.id.not_connect)
+            txt.text = "Finding The Best Locations For You..."}
+            Thread.sleep((2000..3000).random().toLong())
+        runOnUiThread {
+            val txt = findViewById<TextView>(R.id.not_connect)
+            txt.text = "Found The Fastest Routes To Connect To"}
+            Thread.sleep((2000..3000).random().toLong())
+        runOnUiThread {
+            val txt = findViewById<TextView>(R.id.not_connect)
+            txt.text = "Ready to Connect! - Press Connect Button"}
         hideLoading()
     }
     private fun showLoading() {

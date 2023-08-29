@@ -86,7 +86,7 @@
                 android:id="@+id/not_connect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Not connected"
+                android:text="Retrieving Servers Please Wait..."
                 android:textAppearance="@style/not_connect"
                 android:lineSpacingExtra="1sp"
                 android:translationY="-0.57sp"
